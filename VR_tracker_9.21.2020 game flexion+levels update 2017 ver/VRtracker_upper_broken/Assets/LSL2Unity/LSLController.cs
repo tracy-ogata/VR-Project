@@ -29,6 +29,7 @@ public class LSLController : MonoBehaviour
     public Image Fill;
 
     public AudioSource beep;
+    public AudioClip beepClip; 
 
     public Text force;
 
@@ -36,7 +37,7 @@ public class LSLController : MonoBehaviour
     //public Vector3 newPos;
 
     // max value before slider changes to red
-    public float colorThreshold = 0.8f;
+    public float colorThreshold = 0.4f;
 
     // will return that if nothing comes
     private const float defaultValue = 0;
@@ -290,9 +291,9 @@ public class LSLController : MonoBehaviour
         if (slider.value > colorThreshold)
         {
             Fill.color = Color.red;
-            if (realTime % 1000 == 0)
+            if(!beep.isPlaying)
             {
-                beep.Play();
+                beep.PlayOneShot(beepClip, 0.7f);
             }
         }
         else
