@@ -34,7 +34,7 @@ public class LSLController : MonoBehaviour
     //public Vector3 newPos;
 
     // max value before slider changes to red
-    public int colorThreshold = 0.8;
+    public float colorThreshold = 0.8f;
 
     // will return that if nothing comes
     private const float defaultValue = 0;
