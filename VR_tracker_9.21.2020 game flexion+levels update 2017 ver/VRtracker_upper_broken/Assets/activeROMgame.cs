@@ -45,7 +45,7 @@ public class activeROMgame : MonoBehaviour {
 
     public void getSlerp(Transform startPos, Transform endPos)  //need to add if statement for left hand. 
     {
-        centerPoint = (startPos.position + endPos.position) * 0.5f;
+        centerPoint = (startPos.position + endPos.position) * 0.5f - Vector3.right;
         centerPoint -= Vector3.right;
         startRelCenter = startPos.position - centerPoint;
         endRelCenter = endPos.position - centerPoint;
@@ -57,6 +57,23 @@ public class activeROMgame : MonoBehaviour {
         }
     }
 
+    public void dragonCollision()
+    {
+        munchSound.Play();
+        //Instantiate(textPrefab, popupLocation.position, Quaternion.Euler(0, 180, 0));
+        g_Hit++;
+        reset_Hit++;
+        inHand = false;
+        testThrow.controller.SetActive(true);
+        testThrow.controllerCover.SetActive(true);
+        testThrow.chicken.SetActive(false);
+        lineRenderer.SetActive(false);
+        lineRenderer2.SetActive(false);
+        lineRenderer3.SetActive(false);
+        foodSelected.SetActive(false);
+        testThrow.collidingObject.SetActive(false);
+        testThrow.collidingObject = null;
+    }
 
     // Use this for initialization
     void Start () {
@@ -175,7 +192,7 @@ public class activeROMgame : MonoBehaviour {
 
             if (testThrow.collidingObject)
             {
-                if(testThrow.collidingObject.name == "food" && inHand == false) 
+                if(testThrow.collidingObject.name == "food" && !inHand)
                 {
                     testThrow.controller.SetActive(false);
                     testThrow.controllerCover.SetActive(false);
@@ -190,20 +207,7 @@ public class activeROMgame : MonoBehaviour {
 
                 if (inHand && testThrow.collidingObject.name == "easy")
                 {
-                    munchSound.Play();
-                    //Instantiate(textPrefab, popupLocation.position, Quaternion.Euler(0, 180, 0));
-                    g_Hit++;
-                    reset_Hit++;
-                    inHand = false;
-                    testThrow.controller.SetActive(true);
-                    testThrow.controllerCover.SetActive(true);
-                    testThrow.chicken.SetActive(false);
-                    lineRenderer.SetActive(false);
-                    lineRenderer2.SetActive(false);
-                    lineRenderer3.SetActive(false);
-                    foodSelected.SetActive(false);
-                    testThrow.collidingObject.SetActive(false);
-                    testThrow.collidingObject = null;
+                    dragonCollision();
                     //score = score + 10;
                     //scoreText.text = score.ToString();
 
@@ -211,40 +215,14 @@ public class activeROMgame : MonoBehaviour {
 
                 else if (inHand && testThrow.collidingObject.name == "med")
                 {
-                    munchSound.Play();
-                    //Instantiate(textPrefab2, popupLocation.position, Quaternion.Euler(0, 180, 0));
-                    g_Hit++;
-                    reset_Hit++;
-                    inHand = false;
-                    testThrow.controller.SetActive(true);
-                    testThrow.controllerCover.SetActive(true);
-                    testThrow.chicken.SetActive(false);
-                    lineRenderer.SetActive(false);
-                    lineRenderer2.SetActive(false);
-                    lineRenderer3.SetActive(false);
-                    foodSelected.SetActive(false);
-                    testThrow.collidingObject.SetActive(false);
-                    testThrow.collidingObject = null;
+                    dragonCollision();
                     //score = score + 20;
                     //scoreText.text = score.ToString();
                 }
 
                 else if (inHand && testThrow.collidingObject.name == "hard")
                 {
-                    munchSound.Play();
-                    //Instantiate(textPrefab3, popupLocation.position, Quaternion.Euler(0, 180, 0));
-                    g_Hit++;
-                    reset_Hit++;
-                    inHand = false;
-                    testThrow.controller.SetActive(true);
-                    testThrow.controllerCover.SetActive(true);
-                    testThrow.chicken.SetActive(false);
-                    lineRenderer.SetActive(false);
-                    lineRenderer2.SetActive(false);
-                    lineRenderer3.SetActive(false);
-                    foodSelected.SetActive(false);
-                    testThrow.collidingObject.SetActive(false);
-                    testThrow.collidingObject = null;
+                    dragonCollision();
                     //score = score + 30;
                     //scoreText.text = score.ToString();
                 }
