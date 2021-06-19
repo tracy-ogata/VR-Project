@@ -46,7 +46,6 @@ public class activeROMgame : MonoBehaviour {
     public void getSlerp(Transform startPos, Transform endPos)  //need to add if statement for left hand. 
     {
         centerPoint = (startPos.position + endPos.position) * 0.5f - Vector3.right;
-        centerPoint -= Vector3.right;
         startRelCenter = startPos.position - centerPoint;
         endRelCenter = endPos.position - centerPoint;
         for (int i = 0; i < 25; i++)
