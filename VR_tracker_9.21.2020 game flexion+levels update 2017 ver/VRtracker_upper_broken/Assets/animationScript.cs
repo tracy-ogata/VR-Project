@@ -15,9 +15,9 @@ public class animationScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        var device = SteamVR_Controller.Input((int)testThrow.trackedObj.index);
+        //var device = SteamVR_Controller.Input((int)testThrow.trackedObj.index);
 
-        if (animationStart && device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger))
+        if (animationStart && testThrow.device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger))
         {
             animClick++;
             Debug.Log("click");
