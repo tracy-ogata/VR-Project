@@ -26,13 +26,21 @@ public class LSLController : MonoBehaviour
     //public Slider slider6;
     //public Slider slider7;
 
+    public Image Fill;
+
+    public AudioSource beep;
+    public AudioClip beepClip;
+
     public Text force;
 
 	public Transform marker;
-	//public Vector3 newPos;
-    
-	// will return that if nothing comes
-	private const float defaultValue = 0;
+    //public Vector3 newPos;
+
+    // max value before slider changes to red
+    public float colorThreshold = 0.4f;
+
+    // will return that if nothing comes
+    private const float defaultValue = 0;
 
 	// info about the stream we seek
 	public string streamName = "breath";
@@ -280,8 +288,20 @@ public class LSLController : MonoBehaviour
         }
                                         
         slider.value = (sample[0]);
+        if (slider.value > colorThreshold)
+        {
+            Fill.color = Color.red;
+            if (!beep.isPlaying)
+            {
+                beep.PlayOneShot(beepClip, 0.7f);
+            }
+        }
+        else
+        {
+            Fill.color = Color.green;
+        }
         //force.text = slider.value.ToString();
-	}
+    }
 	
 	void OnApplicationQuit ()
 	{
