@@ -29,6 +29,10 @@ public class activeROMgame : MonoBehaviour {
     public GameObject lineRenderer2;
     public GameObject lineRenderer3;
     private int numPoints = 2;
+    private Vector3[] positions = new Vector3[25];
+    private Vector3 centerPoint;
+    private Vector3 startRelCenter;
+    private Vector3 endRelCenter;
     public Material sparkles; 
 
     public SteamVR_TestThrow testThrow;
@@ -36,6 +40,39 @@ public class activeROMgame : MonoBehaviour {
     public dragonPooler dragonPooler;
     public foodPooler foodPooler;
     public Create_vMarkers cylinder;
+
+    public void getSlerp(Transform startPos, Transform endPos)  //need to add if statement for left hand. 
+    {
+        centerPoint = (startPos.position + endPos.position) * 0.5f;
+        //centerPoint = (startPos.position + endPos.position) * 0.5f - Vector3.right;
+        centerPoint -= Vector3.right;
+        startRelCenter = startPos.position - centerPoint;
+        endRelCenter = endPos.position - centerPoint;
+        for (int i = 0; i < 25; i++)
+        {
+            float fracComplete = (i / 25.0f);
+            positions[i] = Vector3.Slerp(startRelCenter, endRelCenter, fracComplete) + centerPoint;
+            lineRenderer3.GetComponent<LineRenderer>().SetPositions(positions);
+        }
+    }
+
+    public void dragonCollision()
+    {
+        munchSound.Play();
+        //Instantiate(textPrefab, popupLocation.position, Quaternion.Euler(0, 180, 0));
+        g_Hit++;
+        reset_Hit++;
+        inHand = false;
+        testThrow.controller.SetActive(true);
+        testThrow.controllerCover.SetActive(true);
+        testThrow.chicken.SetActive(false);
+        lineRenderer.SetActive(false);
+        lineRenderer2.SetActive(false);
+        lineRenderer3.SetActive(false);
+        foodSelected.SetActive(false);
+        testThrow.collidingObject.SetActive(false);
+        //testThrow.collidingObject = null;
+    }
 
     // Use this for initialization
     void Start () {
@@ -101,6 +138,16 @@ public class activeROMgame : MonoBehaviour {
                 lineRenderer3.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
                 lineRenderer3.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("hard").transform.position);
 
+                if (GameObject.Find("hard").transform.position.x < testThrow.RACR.transform.position.x)    //how to find if the object is behind? x position is < RACR.position.x
+                {
+                    getSlerp(foodSelected.transform, GameObject.Find("hard").transform);   //slerp points to the behind points. 
+                }
+                else
+                {
+                    lineRenderer3.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
+                    lineRenderer3.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("hard").transform.position);
+                }
+
             }
 
             if (reset_Hit >= 5)
@@ -146,7 +193,7 @@ public class activeROMgame : MonoBehaviour {
 
             if (testThrow.collidingObject)
             {
-                if(testThrow.collidingObject.name == "food" && inHand == false) 
+                if(testThrow.collidingObject.name == "food" && !inHand) 
                 {
                     testThrow.controller.SetActive(false);
                     testThrow.controllerCover.SetActive(false);
@@ -161,72 +208,29 @@ public class activeROMgame : MonoBehaviour {
 
                 if (inHand && testThrow.collidingObject.name == "easy")
                 {
-                    munchSound.Play();
-                    //Instantiate(textPrefab, popupLocation.position, Quaternion.Euler(0, 180, 0));
-                    g_Hit++;
-                    reset_Hit++;
-                    inHand = false;
-                    testThrow.controller.SetActive(true);
-                    testThrow.controllerCover.SetActive(true);
-                    testThrow.chicken.SetActive(false);
-                    lineRenderer.SetActive(false);
-                    lineRenderer2.SetActive(false);
-                    lineRenderer3.SetActive(false);
-                    foodSelected.SetActive(false);
-                    testThrow.collidingObject.SetActive(false);
-                    //testThrow.collidingObject = null;
                     //score = score + 10;
                     //scoreText.text = score.ToString();
+                    dragonCollision();
 
                 }
 
                 else if (inHand && testThrow.collidingObject.name == "med")
                 {
-                    munchSound.Play();
-                    //Instantiate(textPrefab2, popupLocation.position, Quaternion.Euler(0, 180, 0));
-                    g_Hit++;
-                    reset_Hit++;
-                    inHand = false;
-                    testThrow.controller.SetActive(true);
-                    testThrow.controllerCover.SetActive(true);
-                    testThrow.chicken.SetActive(false);
-                    lineRenderer.SetActive(false);
-                    lineRenderer2.SetActive(false);
-                    lineRenderer3.SetActive(false);
-                    foodSelected.SetActive(false);
-                    testThrow.collidingObject.SetActive(false);
-                    //testThrow.collidingObject = null;
                     //score = score + 20;
                     //scoreText.text = score.ToString();
+                    dragonCollision();
                 }
 
                 else if (inHand && testThrow.collidingObject.name == "hard")
                 {
-                    munchSound.Play();
-                    //Instantiate(textPrefab3, popupLocation.position, Quaternion.Euler(0, 180, 0));
-                    g_Hit++;
-                    reset_Hit++;
-                    inHand = false;
-                    testThrow.controller.SetActive(true);
-                    testThrow.controllerCover.SetActive(true);
-                    testThrow.chicken.SetActive(false);
-                    lineRenderer.SetActive(false);
-                    lineRenderer2.SetActive(false);
-                    lineRenderer3.SetActive(false);
-                    foodSelected.SetActive(false);
-                    testThrow.collidingObject.SetActive(false);
-                    //testThrow.collidingObject = null;
                     //score = score + 30;
                     //scoreText.text = score.ToString();
+                    dragonCollision(); 
                 }
 
                 testThrow.collidingObject = null;
             }
 
-            /*else if (!testThrow.collidingObject)
-            {
-                Debug.Log("no collision");
-            }*/
         }
     }
 }
