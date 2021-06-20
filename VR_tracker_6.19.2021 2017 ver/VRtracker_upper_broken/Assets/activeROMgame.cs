@@ -71,6 +71,7 @@ public class activeROMgame : MonoBehaviour {
         lineRenderer3.SetActive(false);
         foodSelected.SetActive(false);
         testThrow.collidingObject.SetActive(false);
+        testThrow.device.TriggerHapticPulse(5000);
         //testThrow.collidingObject = null;
     }
 
@@ -203,6 +204,8 @@ public class activeROMgame : MonoBehaviour {
                     foodSelected.transform.position = testThrow.collidingObject.transform.position;
                     foodSelected.SetActive(true);
                     testThrow.collidingObject.SetActive(false);
+                    testThrow.device.TriggerHapticPulse(5000);
+                    Debug.Log("pulse");
                     //testThrow.collidingObject = null;
                 }
 
