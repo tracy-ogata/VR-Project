@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - RLKnee
+  - RMKnee
+  - RAsis
+  - Rlank
+  - Rmank
+  - Torso
+  - UpperArm
+  - Forearm
+  - RACR
+  - C7
+  - T8
+  - STRN
+  - RMELB
+  - RLELB
+  - RFA
+  - RUS
+  - RRS
+  - UI
+  - TorsoProximal
+  - TorsoDistal
+  - R_Shoulder
+  - R_Elbow
+  - R_Wrist
+  - reachingObject
+  - object2
+  - startButton
+  - upperarm_cube
+  - forearm_cube
+  - line
+  - preab
+  - munch
+  - music
+  - GDrop
+  - BDrop
+  - YDrop
+  - CHEST
+  - ' '
+  - FxTemporaire
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
