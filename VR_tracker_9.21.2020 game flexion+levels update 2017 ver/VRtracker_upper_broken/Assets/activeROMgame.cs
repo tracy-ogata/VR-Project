@@ -33,15 +33,130 @@ public class activeROMgame : MonoBehaviour {
     private Vector3 centerPoint;
     private Vector3 startRelCenter;
     private Vector3 endRelCenter;
+    public Vector3 endpointDragon;
     //public Transform startPos;
     //public Transform endPos;
-    public Material sparkles; 
+    public Material sparkles;
 
     public SteamVR_TestThrow testThrow;
     public createEndpointLists endpointsScript;
     public dragonPooler dragonPooler;
     public foodPooler foodPooler;
     public Create_vMarkers cylinder;
+    public dragonMovement dragonMovement;
+    public int indexFar = 0;
+    public int indexClose = 0;
+    public int indexHead = 0;
+    public int indexShoulder = 0;
+    public int indexWaist = 0;
+    public int indexUpper = 0;
+    public int indexLower = 0;
+    public int index;
+
+    public void movementType(string type)
+    {
+        switch (type)
+        {
+            case "extension":
+                endpointDragon = endpointsScript.endpointsFar[indexFar];
+                indexFar++;
+                if (indexFar = endpointsScript.endpointsFar.Count - 1)
+                {
+                    indexFar = 0;
+                }
+                food.transform.position = endpointsScript.endpointsClose[indexClose];
+                indexClose++;
+                if (indexClose > endpointsScript.endpointsClose.Count - 1)
+                {
+                    indexClose = 0;
+                }
+                break;
+            case "flexion":
+                endpointDragon = endpointsScript.endpointsClose[indexClose];
+                indexClose++;
+                if (indexClose = endpointsScript.endpointsClose.Count - 1)
+                {
+                    indexClose = 0;
+                }
+                food.transform.position = endpointsScript.endpointsFar[indexFar];
+                indexFar++;
+                if (indexFar > endpointsScript.endpointsFar.Count - 1)
+                {
+                    indexFar = 0;
+                }
+                break;
+            case "horizontalHead":
+                endpointDragon = endpointsScript.endpointsHead[indexHead];
+                indexHead++;
+                if (indexHead = endpointsScript.endpointsHead.Count - 1)
+                {
+                    indexHead = 0;
+                }
+                food.transform.position = endpointsScript.endpointsHead[indexHead];
+                indexHead++;
+                if (indexHead > endpointsScript.endpointsHead.Count - 1)
+                {
+                    indexHead = 0;
+                }
+                break;
+            case "horizontalShoulder":
+                endpointDragon = endpointsScript.endpointsShoulder[indexShoulder];
+                indexShoulder++;
+                if (indexShoulder = endpointsScript.endpointsShoulder.Count - 1)
+                {
+                    indexShoulder = 0;
+                }
+                food.transform.position = endpointsScript.endpointsShoulder[indexShoulder];
+                indexShoulder++;
+                if (indexShoulder > endpointsScript.endpointsShoulder.Count - 1)
+                {
+                    indexShoulder = 0;
+                }
+                break;
+            case "horizontalWaist":
+                endpointDragon = endpointsScript.endpointsWaist[indexWaist];
+                indexWaist++;
+                if (indexWaist = endpointsScript.endpointsWaist.Count - 1)
+                {
+                    indexFar = 0;
+                }
+                food.transform.position = endpointsScript.endpointsWaist[indexWaist];
+                indexWaist++;
+                if (indexWaist > endpointsScript.endpointsWaist.Count - 1)
+                {
+                    indexWaist = 0;
+                }
+                break;
+            case "up":
+                endpointDragon = endpointsScript.endpoints[indexUpper];
+                indexUpper++;
+                if (indexUpper = endpointsScript.endpointsUpper.Count - 1)
+                {
+                    indexUpper = 0;
+                }
+                food.transform.position = endpointsScript.endpointsLower[indexLower];
+                indexLower++;
+                if (indexLower > endpointsScript.endpointsLower.Count - 1)
+                {
+                    indexLower = 0;
+                }
+                break;
+            case "down":
+                endpointDragon = endpointsScript.endpointsLower[indexLower];
+                indexLower++;
+                if (indexLower = endpointsScript.endpointsLower.Count - 1)
+                {
+                    indexLower = 0;
+                }
+                food.transform.position = endpointsScript.endpointsUpper[indexUpper];
+                indexUpper++;
+                if (indexUpper > endpointsScript.endpointsUpper.Count - 1)
+                {
+                    indexUpper = 0;
+                }
+                break;
+        }
+    }
 
     public void getSlerp(Transform startPos, Transform endPos)  //need to add if statement for left hand. 
     {
@@ -108,12 +223,20 @@ public class activeROMgame : MonoBehaviour {
             {
                 GameObject food = foodPooler.GetPooledObject();
                 foodIndex = Random.Range(0, endpointsScript.endpointsFood.Count);   //instantiate the food objects at random endpoints. 
+                while (endpointsScript.endpointsFood[foodIndex] == endpointsScript.endpointsEasy[dragonMovement.indexE] || endpointsScript.endpointsFood[foodIndex] == endpointsScript.endpointsMed[dragonMovement.indexM] || endpointsScript.endpointsFood[foodIndex] == endpointsScript.endpointsHard[dragonMovement.indexH])
+                {
+                    foodIndex++;
+                    if (foodIndex > endpointsScript.endpointsFood.Count - 1)
+                    {
+                        foodIndex = 0;
+                    }
+                }
                 food.transform.position = endpointsScript.endpointsFood[foodIndex];
                 food.transform.rotation = Quaternion.Euler(0, 180, 0);   //to add active flexibility i think just make this based on the subject's cylinder or tracker rotation. 
                 food.SetActive(true);
             }
 
-            if(inHand == true)  //we grabbed a chicken leg. create the line renders to the dragons. will need to edit and incorporate logic for the different curves?? is there a way to create a curve
+            if (inHand == true)  //we grabbed a chicken leg. create the line renders to the dragons. will need to edit and incorporate logic for the different curves?? is there a way to create a curve
                 //one curve for items on the same horizontal plane, vertical plane, but what to do for cross planes? maybe straight line to get on same plane and then follow horizontal/vertical plane logic? 
                 //do we want to measure this guided movement or measure how they actually reach for the items and move to another point? 
             {
@@ -130,19 +253,19 @@ public class activeROMgame : MonoBehaviour {
                 lineRenderer3.GetComponent<LineRenderer>().positionCount = numPoints;
 
                 lineRenderer.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
-                lineRenderer.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("easy").transform.position);
+                lineRenderer.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("drag1").transform.position);
 
                 lineRenderer2.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
-                lineRenderer2.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("med").transform.position);
+                lineRenderer2.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("drag2").transform.position);
 
-                if(GameObject.Find("hard").transform.position.x < testThrow.RACR.transform.position.x)    //how to find if the object is behind? x position is < RACR.position.x
+                if(GameObject.Find("drag3").transform.position.x < testThrow.RACR.transform.position.x)    //how to find if the object is behind? x position is < RACR.position.x
                 {
-                    getSlerp(foodSelected.transform, GameObject.Find("hard").transform);   //slerp points to the behind points. 
+                    getSlerp(foodSelected.transform, GameObject.Find("drag3").transform);   //slerp points to the behind points. 
                 }
                 else
                 {
                     lineRenderer3.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
-                    lineRenderer3.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("hard").transform.position);
+                    lineRenderer3.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("drag3").transform.position);
                 }
                 
 
@@ -204,7 +327,7 @@ public class activeROMgame : MonoBehaviour {
                     testThrow.collidingObject = null;
                 }
 
-                if (inHand && testThrow.collidingObject.name == "easy")
+                if (inHand && testThrow.collidingObject.name == "drag1")
                 {
                     dragonCollision();
                     //score = score + 10;
@@ -212,14 +335,14 @@ public class activeROMgame : MonoBehaviour {
 
                 }
 
-                else if (inHand && testThrow.collidingObject.name == "med")
+                else if (inHand && testThrow.collidingObject.name == "drag2")
                 {
                     dragonCollision();
                     //score = score + 20;
                     //scoreText.text = score.ToString();
                 }
 
-                else if (inHand && testThrow.collidingObject.name == "hard")
+                else if (inHand && testThrow.collidingObject.name == "drag3")
                 {
                     dragonCollision();
                     //score = score + 30;

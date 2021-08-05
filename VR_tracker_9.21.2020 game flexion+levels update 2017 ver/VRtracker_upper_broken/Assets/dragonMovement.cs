@@ -18,7 +18,7 @@ public class dragonMovement : MonoBehaviour {
     public Create_vMarkers cylinder;
 
     void OnEnable () {
-        if (this.name == "easy")
+        if (this.name == "drag1")
         {
             //index = Random.Range(0, endpointsScript.endpointsEasy.Count - 1);
             //endPointLocation = endpointsScript.endpointsEasy[index];
@@ -33,7 +33,7 @@ public class dragonMovement : MonoBehaviour {
             }
         }
 
-        else if(this.name == "med")
+        else if(this.name == "drag2")
         {
             indexM = Random.Range(0, endpointsScript.endpointsMed.Count - 1);
             //step = Random.Range(1f, 2.0f);
@@ -41,7 +41,7 @@ public class dragonMovement : MonoBehaviour {
             active = true;
         }
 
-        else if (this.name == "hard")
+        else if (this.name == "drag3")
         {
             indexH = Random.Range(0, endpointsScript.endpointsHard.Count - 1);
             //step = Random.Range(1f, 2.0f);

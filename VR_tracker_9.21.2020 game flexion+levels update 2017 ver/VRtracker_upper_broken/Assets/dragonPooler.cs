@@ -21,9 +21,9 @@ public class dragonPooler : MonoBehaviour {
         obj.SetActive(false);
         obj2.SetActive(false);
         obj3.SetActive(false);
-        obj.name = "easy";
-        obj2.name = "med";
-        obj3.name = "hard";
+        obj.name = "drag1";
+        obj2.name = "drag2";
+        obj3.name = "drag3";
         pooledObjs.Add(obj);
         pooledObjs.Add(obj2);
         pooledObjs.Add(obj3);

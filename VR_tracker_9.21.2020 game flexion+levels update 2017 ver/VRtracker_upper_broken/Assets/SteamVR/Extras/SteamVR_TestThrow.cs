@@ -333,7 +333,7 @@ public class SteamVR_TestThrow : MonoBehaviour
             return;
         }
 
-        else if (other.gameObject.name.Equals("food") || other.gameObject.name.Equals("easy") || other.gameObject.name.Equals("med") || other.gameObject.name.Equals("hard") || other.gameObject.tag.Equals("RACR") || other.gameObject.tag.Equals("C7") || other.gameObject.tag.Equals("T8") || other.gameObject.tag.Equals("STRN") || other.gameObject.tag.Equals("Chest") || other.gameObject.tag.Equals("RMELB") || other.gameObject.tag.Equals("RLELB") || other.gameObject.tag.Equals("RFA") || other.gameObject.tag.Equals("RUS") || other.gameObject.tag.Equals("RRS"))
+        else if (other.gameObject.name.Equals("food") || other.gameObject.name.Equals("drag1") || other.gameObject.name.Equals("drag2") || other.gameObject.name.Equals("drag3") || other.gameObject.tag.Equals("RACR") || other.gameObject.tag.Equals("C7") || other.gameObject.tag.Equals("T8") || other.gameObject.tag.Equals("STRN") || other.gameObject.tag.Equals("Chest") || other.gameObject.tag.Equals("RMELB") || other.gameObject.tag.Equals("RLELB") || other.gameObject.tag.Equals("RFA") || other.gameObject.tag.Equals("RUS") || other.gameObject.tag.Equals("RRS"))
         {
             collidingObject = other.gameObject;
         }
