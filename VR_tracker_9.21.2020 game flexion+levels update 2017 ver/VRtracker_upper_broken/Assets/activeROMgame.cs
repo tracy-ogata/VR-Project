@@ -390,7 +390,7 @@ public class activeROMgame : MonoBehaviour {
                     testThrow.collidingObject = null;
                     //score = score + 10;
                     //scoreText.text = score.ToString();
-
+                    moveToNextRound(1);
                 }
 
                 else if (inHand2 && testThrow.collidingObject.name == "drag2")
@@ -411,7 +411,7 @@ public class activeROMgame : MonoBehaviour {
                     testThrow.collidingObject = null;
                     //score = score + 20;
                     //scoreText.text = score.ToString();
-
+                    moveToNextRound(2);
                 }
 
                 else if (inHand3 && testThrow.collidingObject.name == "drag3")
@@ -432,7 +432,7 @@ public class activeROMgame : MonoBehaviour {
                     testThrow.collidingObject = null;
                     //score = score + 30;
                     //scoreText.text = score.ToString();
-                    moveToNextRound = true;
+                    moveToNextRound(3);
                 }
             }
 
