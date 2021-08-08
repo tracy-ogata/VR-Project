@@ -85,7 +85,8 @@ public class SteamVR_TestThrow : MonoBehaviour
     public GameObject endpointsButton;
     public GameObject chunks;
     public GameObject scenery;
-    public GameObject buttonCanvas; 
+    public GameObject buttonCanvas;
+    public GameObject roundButtonCanvas; 
 
     public Dropdown handDrop;
 
@@ -112,6 +113,7 @@ public class SteamVR_TestThrow : MonoBehaviour
         chunks.SetActive(false);
         chicken.SetActive(false);
         controllerCover.SetActive(true);
+        roundButtonCanvas.SetActive(false);
         
         
 
@@ -265,6 +267,8 @@ public class SteamVR_TestThrow : MonoBehaviour
         foodPooler.obj.SetActive(true);
         foodPooler.obj2.SetActive(true);
         foodPooler.obj3.SetActive(true);
+
+        roundButtonCanvas.SetActive(true);
 
     }
 

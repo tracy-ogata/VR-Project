@@ -62,25 +62,13 @@ public class activeROMgame : MonoBehaviour {
 
     public int dragonNum;
 
-    public void moveToNextRound(int dragNum)
+    public void moveToNextRound()
     {
         dragonMovement.movement++;
 
-        if (dragNum == 1)
-        {
-            dragonPooler.obj2.SetActive(false);
-            dragonPooler.obj3.SetActive(false);
-        }
-        else if (dragNum == 2)
-        {
-            dragonPooler.obj.SetActive(false);
-            dragonPooler.obj3.SetActive(false);
-        }
-        else if (dragNum == 3)
-        {
-            dragonPooler.obj.SetActive(false);
-            dragonPooler.obj2.SetActive(false);
-        }
+        dragonPooler.obj.SetActive(false);
+        dragonPooler.obj2.SetActive(false);
+        dragonPooler.obj3.SetActive(false);
 
         dragonPooler.obj.SetActive(true);
         dragonPooler.obj2.SetActive(true);
@@ -89,6 +77,11 @@ public class activeROMgame : MonoBehaviour {
         foodPooler.obj.SetActive(true);
         foodPooler.obj2.SetActive(true);
         foodPooler.obj3.SetActive(true);
+    }
+
+    public void resetRound()
+    {
+        //do something
     }
 
     public void movementType(int type, out Vector3 endpointDragon, out Vector3 endpointFood)
@@ -342,6 +335,7 @@ public class activeROMgame : MonoBehaviour {
                 testThrow.gameOverCanvas.transform.position = targetPosition;
 
                 testThrow.gameOverCanvas.transform.eulerAngles = new Vector3(0f, cylinder.cylinder2.transform.eulerAngles.y - 180, 0f);*/
+                testThrow.roundButtonCanvas.SetActive(false);
                 testThrow.gameOverCanvas.SetActive(true);
                 testThrow.restartMenu.SetActive(true);
                 testThrow.controller.SetActive(true);
@@ -359,6 +353,7 @@ public class activeROMgame : MonoBehaviour {
                     testThrow.chicken.SetActive(true);
                     if (testThrow.collidingObject.name == "food")
                     {
+                        //maybe consider setting dragons to false here too. 
                         inHand = true;
                         foodPooler.obj2.SetActive(false);
                         foodPooler.obj3.SetActive(false);
@@ -400,7 +395,7 @@ public class activeROMgame : MonoBehaviour {
                     testThrow.collidingObject = null;
                     //score = score + 10;
                     //scoreText.text = score.ToString();
-                    moveToNextRound(1);
+                    moveToNextRound();
                 }
 
                 else if (inHand2 && testThrow.collidingObject.name == "drag2")
@@ -421,7 +416,7 @@ public class activeROMgame : MonoBehaviour {
                     testThrow.collidingObject = null;
                     //score = score + 20;
                     //scoreText.text = score.ToString();
-                    moveToNextRound(2);
+                    moveToNextRound();
                 }
 
                 else if (inHand3 && testThrow.collidingObject.name == "drag3")
@@ -442,7 +437,7 @@ public class activeROMgame : MonoBehaviour {
                     testThrow.collidingObject = null;
                     //score = score + 30;
                     //scoreText.text = score.ToString();
-                    moveToNextRound(3);
+                    moveToNextRound();
                 }
             }
 
