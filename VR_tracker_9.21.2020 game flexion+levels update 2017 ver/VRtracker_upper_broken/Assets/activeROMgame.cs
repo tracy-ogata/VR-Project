@@ -272,33 +272,41 @@ public class activeROMgame : MonoBehaviour {
                 //one curve for items on the same horizontal plane, vertical plane, but what to do for cross planes? maybe straight line to get on same plane and then follow horizontal/vertical plane logic? 
                 //do we want to measure this guided movement or measure how they actually reach for the items and move to another point? 
             {
-                lineRenderer.SetActive(true);
-                lineRenderer2.SetActive(true);
-                lineRenderer3.SetActive(true);
-
-                lineRenderer.GetComponent<Renderer>().material = sparkles;
-                lineRenderer2.GetComponent<Renderer>().material = sparkles;
-                lineRenderer3.GetComponent<Renderer>().material = sparkles;
-
-                lineRenderer.GetComponent<LineRenderer>().positionCount = numPoints;
-                lineRenderer2.GetComponent<LineRenderer>().positionCount = numPoints;
-                lineRenderer3.GetComponent<LineRenderer>().positionCount = numPoints;
-
-                lineRenderer.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
-                lineRenderer.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("drag1").transform.position);
-
-                lineRenderer2.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
-                lineRenderer2.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("drag2").transform.position);
-
-                if(GameObject.Find("drag3").transform.position.x < testThrow.RACR.transform.position.x)    //how to find if the object is behind? x position is < RACR.position.x
+                if (inHand)
                 {
-                    getSlerp(foodSelected.transform, GameObject.Find("drag3").transform);   //slerp points to the behind points. 
+                    lineRenderer.SetActive(true);
+                    lineRenderer.GetComponent<Renderer>().material = sparkles;
+                    lineRenderer.GetComponent<LineRenderer>().positionCount = numPoints;
+                    lineRenderer.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
+                    lineRenderer.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("drag1").transform.position);
                 }
-                else
+
+                else if (inHand2)
                 {
-                    lineRenderer3.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
-                    lineRenderer3.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("drag3").transform.position);
+                    lineRenderer2.SetActive(true);
+                    lineRenderer2.GetComponent<Renderer>().material = sparkles;
+                    lineRenderer2.GetComponent<LineRenderer>().positionCount = numPoints;
+                    lineRenderer2.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
+                    lineRenderer2.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("drag2").transform.position);
                 }
+
+                else if (inHand3)
+                {
+                    lineRenderer3.SetActive(true);
+                    lineRenderer3.GetComponent<Renderer>().material = sparkles;
+                    lineRenderer3.GetComponent<LineRenderer>().positionCount = numPoints;
+                    if (GameObject.Find("drag3").transform.position.x < testThrow.RACR.transform.position.x)    //how to find if the object is behind? x position is < RACR.position.x
+                    {
+                        getSlerp(foodSelected.transform, GameObject.Find("drag3").transform);   //slerp points to the behind points. 
+                    }
+                    else
+                    {
+                        lineRenderer3.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
+                        lineRenderer3.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("drag3").transform.position);
+                    }
+
+                }
+                
             }
 
             if (reset_Hit >= 5)

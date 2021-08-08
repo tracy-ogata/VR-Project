@@ -95,6 +95,7 @@ public class SteamVR_TestThrow : MonoBehaviour
     public Create_vMarkers vMarkers; 
     public SteamVR_Controller.Device device;
     public dragonPooler dragonPooler;
+    public foodPooler foodPooler;
     public passiveROM passiveROM;
     public dotPool dotPool;
 
@@ -257,7 +258,14 @@ public class SteamVR_TestThrow : MonoBehaviour
         //controllerCover.SetActive(false);
         markerSpawn.SetActive(false);
         //chicken.SetActive(true);
-        
+        dragonPooler.obj.SetActive(true);
+        dragonPooler.obj2.SetActive(true);
+        dragonPooler.obj3.SetActive(true);
+
+        foodPooler.obj.SetActive(true);
+        foodPooler.obj2.SetActive(true);
+        foodPooler.obj3.SetActive(true);
+
     }
 
     public void restart_game_button()
