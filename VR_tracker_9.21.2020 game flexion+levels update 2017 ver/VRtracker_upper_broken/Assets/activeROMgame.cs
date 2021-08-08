@@ -22,6 +22,8 @@ public class activeROMgame : MonoBehaviour {
     //public int LocationIndex;
     public int foodIndex;
     public bool inHand;
+    public bool inHand2;
+    public bool inHand3;
 
     public GameObject foodSelected;
 
@@ -53,102 +55,145 @@ public class activeROMgame : MonoBehaviour {
     public int indexLower = 0;
     public int index;
 
-    public void movementType(string type)
+    public int type;
+
+    //easy = 0, med = 1, hard = 2
+    public int difficulty;
+
+    public int dragonNum;
+
+    public void moveToNextRound(int dragNum)
+    {
+        if (dragNum == 1)
+        {
+            dragonPooler.obj2.SetActive(false);
+            dragonPooler.obj3.SetActive(false);
+        }
+        else if (dragNum == 2)
+        {
+            dragonPooler.obj.SetActive(false);
+            dragonPooler.obj3.SetActive(false);
+        }
+        else if (dragNum == 3)
+        {
+            dragonPooler.obj.SetActive(false);
+            dragonPooler.obj2.SetActive(false);
+        }
+
+        dragonPooler.obj.SetActive(true);
+        dragonPooler.obj2.SetActive(true);
+        dragonPooler.obj3.SetActive(true);
+
+        foodPooler.obj.SetActive(true);
+        foodPooler.obj2.SetActive(true);
+        foodPooler.obj3.SetActive(true);
+
+        type += 1;
+    }
+
+    public void movementType(int type, out Vector3 endpointDragon, out Vector3 endpointFood)
     {
         switch (type)
         {
-            case "extension":
+            // extension = 0
+            case 0:
                 endpointDragon = endpointsScript.endpointsFar[indexFar];
                 indexFar++;
                 if (indexFar = endpointsScript.endpointsFar.Count - 1)
                 {
                     indexFar = 0;
                 }
-                food.transform.position = endpointsScript.endpointsClose[indexClose];
+                endpointFood = endpointsScript.endpointsClose[indexClose];
                 indexClose++;
                 if (indexClose > endpointsScript.endpointsClose.Count - 1)
                 {
                     indexClose = 0;
                 }
                 break;
-            case "flexion":
+            // flexion = 1
+            case 1:
                 endpointDragon = endpointsScript.endpointsClose[indexClose];
                 indexClose++;
                 if (indexClose = endpointsScript.endpointsClose.Count - 1)
                 {
                     indexClose = 0;
                 }
-                food.transform.position = endpointsScript.endpointsFar[indexFar];
+                endpointFood = endpointsScript.endpointsFar[indexFar];
                 indexFar++;
                 if (indexFar > endpointsScript.endpointsFar.Count - 1)
                 {
                     indexFar = 0;
                 }
                 break;
-            case "horizontalHead":
+            // horizontalHead = 2
+            case 2:
                 endpointDragon = endpointsScript.endpointsHead[indexHead];
                 indexHead++;
                 if (indexHead = endpointsScript.endpointsHead.Count - 1)
                 {
                     indexHead = 0;
                 }
-                food.transform.position = endpointsScript.endpointsHead[indexHead];
+                endpointFood = endpointsScript.endpointsHead[indexHead];
                 indexHead++;
                 if (indexHead > endpointsScript.endpointsHead.Count - 1)
                 {
                     indexHead = 0;
                 }
                 break;
-            case "horizontalShoulder":
+            // horizontalShoulder = 3
+            case 3:
                 endpointDragon = endpointsScript.endpointsShoulder[indexShoulder];
                 indexShoulder++;
                 if (indexShoulder = endpointsScript.endpointsShoulder.Count - 1)
                 {
                     indexShoulder = 0;
                 }
-                food.transform.position = endpointsScript.endpointsShoulder[indexShoulder];
+                endpointFood = endpointsScript.endpointsShoulder[indexShoulder];
                 indexShoulder++;
                 if (indexShoulder > endpointsScript.endpointsShoulder.Count - 1)
                 {
                     indexShoulder = 0;
                 }
                 break;
-            case "horizontalWaist":
+            // horizontalWwaist = 4
+            case 4:
                 endpointDragon = endpointsScript.endpointsWaist[indexWaist];
                 indexWaist++;
                 if (indexWaist = endpointsScript.endpointsWaist.Count - 1)
                 {
                     indexFar = 0;
                 }
-                food.transform.position = endpointsScript.endpointsWaist[indexWaist];
+                endpointFood = endpointsScript.endpointsWaist[indexWaist];
                 indexWaist++;
                 if (indexWaist > endpointsScript.endpointsWaist.Count - 1)
                 {
                     indexWaist = 0;
                 }
                 break;
-            case "up":
+            // up = 5
+            case 5:
                 endpointDragon = endpointsScript.endpoints[indexUpper];
                 indexUpper++;
                 if (indexUpper = endpointsScript.endpointsUpper.Count - 1)
                 {
                     indexUpper = 0;
                 }
-                food.transform.position = endpointsScript.endpointsLower[indexLower];
+                endpointFood = endpointsScript.endpointsLower[indexLower];
                 indexLower++;
                 if (indexLower > endpointsScript.endpointsLower.Count - 1)
                 {
                     indexLower = 0;
                 }
                 break;
-            case "down":
+            // down = 6
+            case 6:
                 endpointDragon = endpointsScript.endpointsLower[indexLower];
                 indexLower++;
                 if (indexLower = endpointsScript.endpointsLower.Count - 1)
                 {
                     indexLower = 0;
                 }
-                food.transform.position = endpointsScript.endpointsUpper[indexUpper];
+                endpointFood = endpointsScript.endpointsUpper[indexUpper];
                 indexUpper++;
                 if (indexUpper > endpointsScript.endpointsUpper.Count - 1)
                 {
@@ -171,24 +216,6 @@ public class activeROMgame : MonoBehaviour {
         }
     }
 
-    public void dragonCollision()
-    {
-        munchSound.Play();
-        //Instantiate(textPrefab, popupLocation.position, Quaternion.Euler(0, 180, 0));
-        g_Hit++;
-        reset_Hit++;
-        inHand = false;
-        testThrow.controller.SetActive(true);
-        testThrow.controllerCover.SetActive(true);
-        testThrow.chicken.SetActive(false);
-        lineRenderer.SetActive(false);
-        lineRenderer2.SetActive(false);
-        lineRenderer3.SetActive(false);
-        foodSelected.SetActive(false);
-        testThrow.collidingObject.SetActive(false);
-        testThrow.collidingObject = null;
-    }
-
     // Use this for initialization
     void Start () {
         //LocationList.Add(new Vector3(0f, 1f, 3f));
@@ -208,6 +235,8 @@ public class activeROMgame : MonoBehaviour {
 
         if (testThrow.start_game)
         {
+            // old code
+            /*
             if(dragonPooler.GetPooledObject() != null)
             {
                 GameObject obj = dragonPooler.GetPooledObject();
@@ -235,8 +264,9 @@ public class activeROMgame : MonoBehaviour {
                 food.transform.rotation = Quaternion.Euler(0, 180, 0);   //to add active flexibility i think just make this based on the subject's cylinder or tracker rotation. 
                 food.SetActive(true);
             }
+            */
 
-            if (inHand == true)  //we grabbed a chicken leg. create the line renders to the dragons. will need to edit and incorporate logic for the different curves?? is there a way to create a curve
+            if (inHand || inHand2 || inHand3)  //we grabbed a chicken leg. create the line renders to the dragons. will need to edit and incorporate logic for the different curves?? is there a way to create a curve
                 //one curve for items on the same horizontal plane, vertical plane, but what to do for cross planes? maybe straight line to get on same plane and then follow horizontal/vertical plane logic? 
                 //do we want to measure this guided movement or measure how they actually reach for the items and move to another point? 
             {
@@ -267,8 +297,6 @@ public class activeROMgame : MonoBehaviour {
                     lineRenderer3.GetComponent<LineRenderer>().SetPosition(0, foodSelected.transform.position);
                     lineRenderer3.GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("drag3").transform.position);
                 }
-                
-
             }
 
             if (reset_Hit >= 5)
@@ -314,12 +342,29 @@ public class activeROMgame : MonoBehaviour {
 
             if (testThrow.collidingObject)
             {
-                if(testThrow.collidingObject.name == "food" && !inHand)
+                if((testThrow.collidingObject.name == "food" || testThrow.collidingObject.name == "food2" || testThrow.collidingObject.name == "food3") && !(inHand || inHand2 || inHand3))
                 {
                     testThrow.controller.SetActive(false);
                     testThrow.controllerCover.SetActive(false);
                     testThrow.chicken.SetActive(true);
-                    inHand = true;
+                    if (testThrow.collidingObject.name == "food")
+                    {
+                        inHand = true;
+                        foodPooler.obj2.SetActive(false);
+                        foodPooler.obj3.SetActive(false);
+                    }
+                    else if (testThrow.collidingObject.name == "food2")
+                    {
+                        inHand2 = true;
+                        foodPooler.obj.SetActive(false);
+                        foodPooler.obj3.SetActive(false);
+                    }
+                    else if (testThrow.collidingObject.name == "food3")
+                    {
+                        inHand3 = true;
+                        foodPooler.obj.SetActive(false);
+                        foodPooler.obj2.SetActive(false);
+                    }
                     foodSelected.transform.rotation = testThrow.collidingObject.transform.rotation;
                     foodSelected.transform.position = testThrow.collidingObject.transform.position;
                     foodSelected.SetActive(true);
@@ -329,24 +374,65 @@ public class activeROMgame : MonoBehaviour {
 
                 if (inHand && testThrow.collidingObject.name == "drag1")
                 {
-                    dragonCollision();
+                    munchSound.Play();
+                    //Instantiate(textPrefab, popupLocation.position, Quaternion.Euler(0, 180, 0));
+                    g_Hit++;
+                    reset_Hit++;
+                    inHand = false;
+                    testThrow.controller.SetActive(true);
+                    testThrow.controllerCover.SetActive(true);
+                    testThrow.chicken.SetActive(false);
+                    lineRenderer.SetActive(false);
+                    lineRenderer2.SetActive(false);
+                    lineRenderer3.SetActive(false);
+                    foodSelected.SetActive(false);
+                    testThrow.collidingObject.SetActive(false);
+                    testThrow.collidingObject = null;
                     //score = score + 10;
                     //scoreText.text = score.ToString();
 
                 }
 
-                else if (inHand && testThrow.collidingObject.name == "drag2")
+                else if (inHand2 && testThrow.collidingObject.name == "drag2")
                 {
-                    dragonCollision();
+                    munchSound.Play();
+                    //Instantiate(textPrefab, popupLocation.position, Quaternion.Euler(0, 180, 0));
+                    g_Hit++;
+                    reset_Hit++;
+                    inHand2 = false;
+                    testThrow.controller.SetActive(true);
+                    testThrow.controllerCover.SetActive(true);
+                    testThrow.chicken.SetActive(false);
+                    lineRenderer.SetActive(false);
+                    lineRenderer2.SetActive(false);
+                    lineRenderer3.SetActive(false);
+                    foodSelected.SetActive(false);
+                    testThrow.collidingObject.SetActive(false);
+                    testThrow.collidingObject = null;
                     //score = score + 20;
                     //scoreText.text = score.ToString();
+
                 }
 
-                else if (inHand && testThrow.collidingObject.name == "drag3")
+                else if (inHand3 && testThrow.collidingObject.name == "drag3")
                 {
-                    dragonCollision();
+                    munchSound.Play();
+                    //Instantiate(textPrefab, popupLocation.position, Quaternion.Euler(0, 180, 0));
+                    g_Hit++;
+                    reset_Hit++;
+                    inHand3 = false;
+                    testThrow.controller.SetActive(true);
+                    testThrow.controllerCover.SetActive(true);
+                    testThrow.chicken.SetActive(false);
+                    lineRenderer.SetActive(false);
+                    lineRenderer2.SetActive(false);
+                    lineRenderer3.SetActive(false);
+                    foodSelected.SetActive(false);
+                    testThrow.collidingObject.SetActive(false);
+                    testThrow.collidingObject = null;
                     //score = score + 30;
                     //scoreText.text = score.ToString();
+                    moveToNextRound = true;
                 }
             }
 

@@ -8,6 +8,7 @@ public class dragonMovement : MonoBehaviour {
     public dragonPooler dragonPooler;
     public createEndpointLists endpointsScript;
     public activeROMgame activeROM;
+    public foodPooler foodPooler;
 
     public int indexE = 0;
     public int indexM = 0;
@@ -16,8 +17,11 @@ public class dragonMovement : MonoBehaviour {
     public bool active;
     public Vector3 endPointLocation;
     public Create_vMarkers cylinder;
+    public string movement;
 
     void OnEnable () {
+        // old code
+        /*
         if (this.name == "drag1")
         {
             //index = Random.Range(0, endpointsScript.endpointsEasy.Count - 1);
@@ -48,8 +52,23 @@ public class dragonMovement : MonoBehaviour {
             endPointLocation = endpointsScript.endpointsHard[indexH];
             active = true;
         }
+        */
 
-	}
+        if (this.name == "drag1")
+        {
+            activeROM.movementType(movement, endPointLocation, foodPooler.obj.transform.position);
+        }
+
+        else if (this.name == "drag2")
+        {
+            activeROM.movementType(movement, endPointLocation, foodPooler.obj2.transform.position);
+        }
+
+        else if (this.name == "drag3")
+        {
+            activeROM.movementType(movement, endPointLocation, foodPooler.obj3.transform.position);
+        }
+    }
 
     void Update()
     {  

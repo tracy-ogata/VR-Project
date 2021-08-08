@@ -10,7 +10,9 @@ public class foodPooler : MonoBehaviour {
     public int pooledAmount = 3;
     public bool willGrow = false;
     public List<GameObject> pooledObjs;
-
+    public GameObject obj;
+    public GameObject obj2;
+    public GameObject obj3;
 
     void Start()
     {//name each obj here. and use that to determine the score? 
@@ -22,8 +24,8 @@ public class foodPooler : MonoBehaviour {
         obj2.SetActive(false);
         obj3.SetActive(false);
         obj.name = "food";
-        obj2.name = "food";
-        obj3.name = "food";
+        obj2.name = "food1";
+        obj3.name = "food2";
         pooledObjs.Add(obj);
         pooledObjs.Add(obj2);
         pooledObjs.Add(obj3);

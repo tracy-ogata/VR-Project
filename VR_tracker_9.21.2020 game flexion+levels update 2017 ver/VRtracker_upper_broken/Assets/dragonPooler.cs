@@ -10,7 +10,9 @@ public class dragonPooler : MonoBehaviour {
     public int pooledAmount = 3;
     public bool willGrow = false;
     public List<GameObject> pooledObjs;
-
+    public GameObject obj;
+    public GameObject obj2;
+    public GameObject obj3;
 
     void Start()
     {//name each obj here. and use that to determine the score? 
