@@ -57,16 +57,28 @@ public class dragonMovement : MonoBehaviour {
         if (this.name == "drag1")
         {
             activeROM.movementType(movement, endPointLocation, foodPooler.obj.transform.position);
+            active = true;
+            Debug.Log("Movement1: " + movement);
+            Debug.Log("Dragon endpoint1: " + endPointLocation);
+            Debug.Log("Food endpoint1: " + foodPooler.obj.transform.position);
         }
 
         else if (this.name == "drag2")
         {
             activeROM.movementType(movement, endPointLocation, foodPooler.obj2.transform.position);
+            active = true;
+            Debug.Log("Movement2: " + movement);
+            Debug.Log("Dragon endpoint2: " + endPointLocation);
+            Debug.Log("Food endpoint2: " + foodPooler.obj2.transform.position);
         }
 
         else if (this.name == "drag3")
         {
             activeROM.movementType(movement, endPointLocation, foodPooler.obj3.transform.position);
+            active = true;
+            Debug.Log("Movement3: " + movement);
+            Debug.Log("Dragon endpoint3: " + endPointLocation);
+            Debug.Log("Food endpoint3: " + foodPooler.obj3.transform.position);
         }
     }
 

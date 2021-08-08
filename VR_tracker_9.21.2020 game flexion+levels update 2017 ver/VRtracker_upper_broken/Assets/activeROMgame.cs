@@ -64,6 +64,8 @@ public class activeROMgame : MonoBehaviour {
 
     public void moveToNextRound(int dragNum)
     {
+        dragonMovement.movement++;
+
         if (dragNum == 1)
         {
             dragonPooler.obj2.SetActive(false);
@@ -87,8 +89,6 @@ public class activeROMgame : MonoBehaviour {
         foodPooler.obj.SetActive(true);
         foodPooler.obj2.SetActive(true);
         foodPooler.obj3.SetActive(true);
-
-        type += 1;
     }
 
     public void movementType(int type, out Vector3 endpointDragon, out Vector3 endpointFood)
