@@ -80,7 +80,8 @@ public class createEndpointLists : MonoBehaviour {
                     endpoints.Add(p);
                     endpointsFood.Add(p);
                     endpointsFar.Add(p);
-                    endpointsClose.Add(pFlex);
+                    //error with pFlex - tracy to rework this script. 
+                    /*endpointsClose.Add(pFlex);
                     //add all flexion points for food. 
                     Vector3 pFlex = objectPosition(theta, phi, 0.1f * armLength, testThrow.RACR);
                     endpointsFood.Add(pFlex);
@@ -95,7 +96,7 @@ public class createEndpointLists : MonoBehaviour {
                         // j = 2
                         case 2:
                             endpointsHead.Add(p);
-                    }
+                    }*/
 
                 }
                 phi = phi + 45;

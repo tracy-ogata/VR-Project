@@ -16,8 +16,9 @@ public class dragonMovement : MonoBehaviour {
     //public float step;
     public bool active;
     public Vector3 endPointLocation;
+    public Vector3 foodEndpoint; 
     public Create_vMarkers cylinder;
-    public string movement;
+    public int movement;
 
     void OnEnable () {
         // old code
@@ -56,7 +57,8 @@ public class dragonMovement : MonoBehaviour {
 
         if (this.name == "drag1")
         {
-            activeROM.movementType(movement, endPointLocation, foodPooler.obj.transform.position);
+            activeROM.movementType(movement, out endPointLocation, out foodEndpoint);
+            foodPooler.obj.transform.position = foodEndpoint;
             active = true;
             Debug.Log("Movement1: " + movement);
             Debug.Log("Dragon endpoint1: " + endPointLocation);
@@ -65,7 +67,8 @@ public class dragonMovement : MonoBehaviour {
 
         else if (this.name == "drag2")
         {
-            activeROM.movementType(movement, endPointLocation, foodPooler.obj2.transform.position);
+            activeROM.movementType(movement, out endPointLocation, out foodEndpoint);
+            foodPooler.obj2.transform.position = foodEndpoint;
             active = true;
             Debug.Log("Movement2: " + movement);
             Debug.Log("Dragon endpoint2: " + endPointLocation);
@@ -74,7 +77,8 @@ public class dragonMovement : MonoBehaviour {
 
         else if (this.name == "drag3")
         {
-            activeROM.movementType(movement, endPointLocation, foodPooler.obj3.transform.position);
+            activeROM.movementType(movement, out endPointLocation, out foodEndpoint);
+            foodPooler.obj3.transform.position = foodEndpoint;
             active = true;
             Debug.Log("Movement3: " + movement);
             Debug.Log("Dragon endpoint3: " + endPointLocation);
