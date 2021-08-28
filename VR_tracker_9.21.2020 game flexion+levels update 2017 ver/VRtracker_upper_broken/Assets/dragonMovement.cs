@@ -57,7 +57,7 @@ public class dragonMovement : MonoBehaviour {
 
         if (this.name == "drag1")
         {
-            activeROM.movementType(movement, out endPointLocation, out foodEndpoint);
+            activeROM.setEndpoints(movement, index, out endPointLocation, out foodEndpoint);
             foodPooler.obj.transform.position = foodEndpoint;
             active = true;
             Debug.Log("Movement1: " + movement);
@@ -67,7 +67,7 @@ public class dragonMovement : MonoBehaviour {
 
         else if (this.name == "drag2")
         {
-            activeROM.movementType(movement, out endPointLocation, out foodEndpoint);
+            activeROM.setEndpoints(movement, index + 1, out endPointLocation, out foodEndpoint);
             foodPooler.obj2.transform.position = foodEndpoint;
             active = true;
             Debug.Log("Movement2: " + movement);
@@ -77,7 +77,7 @@ public class dragonMovement : MonoBehaviour {
 
         else if (this.name == "drag3")
         {
-            activeROM.movementType(movement, out endPointLocation, out foodEndpoint);
+            activeROM.setEndpoints(movement, index + 2, out endPointLocation, out foodEndpoint);
             foodPooler.obj3.transform.position = foodEndpoint;
             active = true;
             Debug.Log("Movement3: " + movement);

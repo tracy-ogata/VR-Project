@@ -46,14 +46,7 @@ public class activeROMgame : MonoBehaviour {
     public foodPooler foodPooler;
     public Create_vMarkers cylinder;
     public dragonMovement dragonMovement;
-    public int indexFar = 0;
-    public int indexClose = 0;
-    public int indexHead = 0;
-    public int indexShoulder = 0;
-    public int indexWaist = 0;
-    public int indexUpper = 0;
-    public int indexLower = 0;
-    public int index;
+    public int index = 0;
 
     public int type;
 
@@ -64,12 +57,11 @@ public class activeROMgame : MonoBehaviour {
 
     public void moveToNextRound()
     {
-        dragonMovement.movement++;
-
         dragonPooler.obj.SetActive(false);
         dragonPooler.obj2.SetActive(false);
         dragonPooler.obj3.SetActive(false);
 
+        index += 3;
         dragonPooler.obj.SetActive(true);
         dragonPooler.obj2.SetActive(true);
         dragonPooler.obj3.SetActive(true);
@@ -81,20 +73,24 @@ public class activeROMgame : MonoBehaviour {
 
     public void resetRound()
     {
-        //do something
+        index -= 6;
+        moveToNextRound();
     }
 
+    // old code
+    /*
     public void movementType(int type, out Vector3 endpointDragon, out Vector3 endpointFood)
     {
-        endpointDragon = new Vector3(0,0,0);
+        endpointDragon = new Vector3(0, 0, 0);
         endpointFood = new Vector3(0, 0, 0);
+        
         switch (type)
         {
             // extension = 0
             case 0:
                 endpointDragon = endpointsScript.endpointsFar[indexFar];
                 indexFar++;
-                if (indexFar == endpointsScript.endpointsFar.Count - 1)
+                if (indexFar > endpointsScript.endpointsFar.Count - 1)
                 {
                     indexFar = 0;
                 }
@@ -109,7 +105,7 @@ public class activeROMgame : MonoBehaviour {
             case 1:
                 endpointDragon = endpointsScript.endpointsClose[indexClose];
                 indexClose++;
-                if (indexClose == endpointsScript.endpointsClose.Count - 1)
+                if (indexClose > endpointsScript.endpointsClose.Count - 1)
                 {
                     indexClose = 0;
                 }
@@ -124,7 +120,7 @@ public class activeROMgame : MonoBehaviour {
             case 2:
                 endpointDragon = endpointsScript.endpointsHead[indexHead];
                 indexHead++;
-                if (indexHead == endpointsScript.endpointsHead.Count - 1)
+                if (indexHead > endpointsScript.endpointsHead.Count - 1)
                 {
                     indexHead = 0;
                 }
@@ -139,7 +135,7 @@ public class activeROMgame : MonoBehaviour {
             case 3:
                 endpointDragon = endpointsScript.endpointsShoulder[indexShoulder];
                 indexShoulder++;
-                if (indexShoulder == endpointsScript.endpointsShoulder.Count - 1)
+                if (indexShoulder > endpointsScript.endpointsShoulder.Count - 1)
                 {
                     indexShoulder = 0;
                 }
@@ -150,11 +146,11 @@ public class activeROMgame : MonoBehaviour {
                     indexShoulder = 0;
                 }
                 break;
-            // horizontalWwaist = 4
+            // horizontalWaist = 4
             case 4:
                 endpointDragon = endpointsScript.endpointsWaist[indexWaist];
                 indexWaist++;
-                if (indexWaist == endpointsScript.endpointsWaist.Count - 1)
+                if (indexWaist > endpointsScript.endpointsWaist.Count - 1)
                 {
                     indexFar = 0;
                 }
@@ -167,9 +163,9 @@ public class activeROMgame : MonoBehaviour {
                 break;
             // up = 5
             case 5:
-                endpointDragon = endpointsScript.endpoints[indexUpper];
+                endpointDragon = endpointsScript.endpointsUpper[indexUpper];
                 indexUpper++;
-                if (indexUpper == endpointsScript.endpointsUpper.Count - 1)
+                if (indexUpper > endpointsScript.endpointsUpper.Count - 1)
                 {
                     indexUpper = 0;
                 }
@@ -184,7 +180,7 @@ public class activeROMgame : MonoBehaviour {
             case 6:
                 endpointDragon = endpointsScript.endpointsLower[indexLower];
                 indexLower++;
-                if (indexLower == endpointsScript.endpointsLower.Count - 1)
+                if (indexLower > endpointsScript.endpointsLower.Count - 1)
                 {
                     indexLower = 0;
                 }
@@ -196,6 +192,16 @@ public class activeROMgame : MonoBehaviour {
                 }
                 break;
         }
+    }
+    */
+
+    // movement = movement type
+    // index = index within that movement type list
+    // endpoints should be in order of dragonPoint, foodPoint, dragonPoint, foodPoint, etc.
+    public void setEndpoints(int movement, int listIndex, out Vector3 endpointDragon, out Vector3 endpointFood)
+    {
+        endpointDragon = endpointList[movement][listIndex * 2];
+        endpointFood = endpointList[movement][listIndex * 2 + 1];
     }
 
     public void getSlerp(Transform startPos, Transform endPos)  //need to add if statement for left hand. 
