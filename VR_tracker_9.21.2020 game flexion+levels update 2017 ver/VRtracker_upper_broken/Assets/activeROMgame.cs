@@ -51,9 +51,14 @@ public class activeROMgame : MonoBehaviour {
     public int type;
 
     //easy = 0, med = 1, hard = 2
-    public int difficulty;
+    public int difficulty;  
 
     public int dragonNum;
+
+    public void cycleMovementType()
+    {
+        index += 3;
+    }
 
     public void moveToNextRound()
     {
@@ -61,7 +66,7 @@ public class activeROMgame : MonoBehaviour {
         dragonPooler.obj2.SetActive(false);
         dragonPooler.obj3.SetActive(false);
 
-        index += 3;
+        cycleMovementType();
         dragonPooler.obj.SetActive(true);
         dragonPooler.obj2.SetActive(true);
         dragonPooler.obj3.SetActive(true);
